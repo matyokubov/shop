@@ -2,5 +2,5 @@
 ### Requirements:
 - prettytable
 
-### Run this app
+### Run this app:
 app.py

@@ -20,11 +20,25 @@ def products():
 
 def buy():
     product_id = int(input("Choose product ID for buy: "))
-    print(product_id)
+    products = loadData()
+    old_user = user()
+    try:
+        purchase = products[product_id]
+        if old_user["balance"] - purchase["price"] < 0:
+            print("You need to more money")
+        else:
+            old_user["balance"] = old_user["balance"] - purchase["price"]
+            old_user["purchases"] = old_user["purchases"] + [product_id]
+            products = str(products).replace("'", '"')
+            new_user_data = open("test_user.json", 'w')
+            new_user_data.write(str(old_user).replace("'", '"'))
+            print(f"You purchased {purchase['name']}")
+    except IndexError:
+        print(f"Product not found [{product_id}]")
 
 def main():
     products()
-    print(f"Your Balance: {user()['balance']}")
+    print(f"Your Balance: {user()['balance']}$")
     buy()
     main()
 
